@@ -63,18 +63,24 @@ public class GameStateParser {
 				return .array(entries)
 			} else if value == "}" {
 				return nil
+			} else if String(line.suffix(1)) == "{" { // intel_manager
+				let key = line.components(separatedBy: .whitespacesAndNewlines)[0]
+				var entries = [GameStateEntry]()
+				while let entry = nextEntry() {
+					entries.append(entry)
+				}
+				return .keyArray(key, entries)
 			} else {
 				return .value(value)
 			}
 		} else {
-			if String(line.suffix(1)) == "}" {
+			if String(line.suffix(1)) == "}" { // starbase_mgr
 				let entries = line.components(separatedBy: .whitespacesAndNewlines).dropLast().compactMap {
 					parseLine($0)
 				}
 				skip = true
 				return .array(entries)
 			}
-
 			let key = components[0]
 			let value = components.dropFirst().joined(separator: "")
 			if value == "{" {
