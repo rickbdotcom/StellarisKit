@@ -1,0 +1,42 @@
+version="Cepheus v3.4.3"
+version_control_revision=94349
+name="Nation of Sidona"
+date="2412.04.18"
+required_dlcs={
+	"Ancient Relics Story Pack"
+	"Anniversary Portraits"
+	"Apocalypse"
+	"Aquatics Species Pack"
+	"Distant Stars Story Pack"
+	"Federations"
+	"Horizon Signal"
+	"Humanoids Species Pack"
+	"Leviathans Story Pack"
+	"Lithoids Species Pack"
+	"Megacorp"
+	"Necroids Species Pack"
+	"Nemesis"
+	"Overlord"
+	"Plantoids Species Pack"
+	"Synthetic Dawn Story Pack"
+	"Utopia"
+}
+player_portrait="aqu12"
+flag={
+	icon={
+		category="zoological"
+		file="flag_zoological_18.dds"
+	}
+	background={
+		category="backgrounds"
+		file="pattern_01.dds"
+	}
+	colors={
+		"indigo"
+		"green"
+		"black"
+		"null"
+	}
+}
+meta_fleets=480
+meta_planets=15
