@@ -21,6 +21,7 @@ public extension GameStateParser {
 public class GameStateParser {
 	var lines: [String]
 	var lineCount = 0
+	var skip = false
 
 	public init(_ lines: String) {
 		self.lines = lines.components(separatedBy: "\n")
@@ -39,9 +40,18 @@ public class GameStateParser {
 	}
 
 	func nextEntry() -> GameStateEntry? {
+		if skip {
+			skip = false
+			return nil
+		}
 		guard let line = nextLine() else {
 			return nil
 		}
+		return parseLine(line)
+	}
+
+	func parseLine(_ line: String) -> GameStateEntry? {
+		guard line.isEmpty == false else { return nil }
 		let components = line.components(separatedBy: "=")
 		if components.count == 1 {
 			let value = components[0]
@@ -57,6 +67,14 @@ public class GameStateParser {
 				return .value(value)
 			}
 		} else {
+			if String(line.suffix(1)) == "}" {
+				let entries = line.components(separatedBy: .whitespacesAndNewlines).dropLast().compactMap {
+					parseLine($0)
+				}
+				skip = true
+				return .array(entries)
+			}
+
 			let key = components[0]
 			let value = components.dropFirst().joined(separator: "")
 			if value == "{" {
