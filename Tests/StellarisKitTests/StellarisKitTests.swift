@@ -4,8 +4,7 @@ import XCTest
 final class StellarisKitTests: XCTestCase {
     func testExample() throws {
 		let url = Bundle.module.url(forResource: "gamestate", withExtension: nil, subdirectory: "savegame")!
-		let string = String(data: try! Data(contentsOf: url), encoding: .utf8)!
-		let entries = GameStateParser(string).parse()
-		entries.forEach { $0.toJSON()}
+		let gameState = try GameState(url: url)
+		print(gameState.planets(ownedBy: "0").count)
     }
 }
